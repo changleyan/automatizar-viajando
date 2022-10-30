@@ -83,4 +83,4 @@ if __name__ == '__main__':
         is_capacity = step_2_select_viaje()
         if is_capacity:
             slideScreen()
-            step_3_select_asiento()
+            step_3_select_asiento(True, 6)
