@@ -43,6 +43,7 @@ def select_omnibus():
     sleep(0.1)
     clickButton(btnOmnibus)
     loading = checkLoading(btnOmnibus)
+    sleep(0.1)
     if loading is False:
         return True
     return False
@@ -82,4 +83,4 @@ if __name__ == '__main__':
         is_capacity = step_2_select_viaje()
         if is_capacity:
             slideScreen()
-            step_3_select_asiento(varios=True)
+            step_3_select_asiento()

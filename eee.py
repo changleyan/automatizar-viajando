@@ -38,15 +38,15 @@ from utils import *
 # region = pag.getWindowsWithTitle('Nox')[0]
 # region = (region.left, region.top, region.width, region.height)
 # print(region)
-# print(pag.mouseInfo())
+print(pag.mouseInfo())
 # print(pag.Window(hWnd=263542))
 # print(pag.mouseInfo())
 # a = get_position('./parts/days/27.png')
 # print(a)
 
 
-day = 30
-day = "./parts/days/{}.png".format(day)
-print(day)
-l =clickButton(day, 0.99)
-print(l)
+# day = 30
+# day = "./parts/days/{}.png".format(day)
+# print(day)
+# l =clickButton(day, 0.99)
+# print(l)

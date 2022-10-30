@@ -13,7 +13,6 @@ def select_asiento():
         if loading is False:
             reservado, reservadoPosition = checkStay(asientoReservado)
             distancia = distancy_between_points(vacioPosition, reservadoPosition)
-            print(distancia)
             if reservado and distancia <= 5:
                 next, nextPosition = checkStay(btnSiguiente)
                 if next:
@@ -66,10 +65,11 @@ def select_asiento_varios(cantidad:int = 1):
         if checkLoading() is False:
             sleep(0.1)
 
-    next, nextPosition = checkStay(btnSiguiente)
-    if next:
-        click(nextPosition)
-        print('Urra, tenemos pasaje................')
-        return True
+    if checkLoading() is False:
+        next, nextPosition = checkStay(btnSiguiente)
+        if next:
+            click(nextPosition)
+            print('Urra, tenemos pasaje................')
+            return True
 
     return False
