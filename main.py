@@ -59,6 +59,7 @@ def step_2_select_viaje():
             iscapacity, pos = checkStay(noCapacity)
             if iscapacity:
                 print('No hay ni pinga socio, claro si vives en el pais de pinga este....!')
+                # hacer ciclo para volver al inicio
             else:
                 if select_omnibus():
                     return True
@@ -70,7 +71,7 @@ def step_3_select_asiento(varios: bool = False, cantidad : int = 2):
     return select_asiento_varios(cantidad) if varios else select_asiento()
 
 
-if __name__ == '__main__':
+def main():
     month = 'Noviembre'
     window = 'Nox'
     day = prompt(text="", title="Entre el dia a buscar.")
@@ -84,3 +85,6 @@ if __name__ == '__main__':
         if is_capacity:
             slideScreen()
             step_3_select_asiento(True, 6)
+
+if __name__ == '__main__':
+    main()
