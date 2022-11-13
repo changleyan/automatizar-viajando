@@ -6,7 +6,7 @@ import win32api
 import pygetwindow
 import math
 
-region = (926, 3, 435, 734)
+region = (1328, 0, 594, 1017)
 
 def click(position):
     win32api.SetCursorPos(position)
@@ -57,14 +57,14 @@ def checkStay(imagen: str):
 def slideScreen():
     print('Slide...')
     sleep(0.1)
-    pag.moveTo(1130, 700, duration=0.1)
-    pag.dragTo(1124, 445, button='left', duration=0.1)
+    pag.moveTo(1610, 970, duration=0.1)
+    pag.dragTo(1610, 570, button='left', duration=0.1)
     sleep(0.15)
 
 def resizeWindow(nameWindow):
     win = pygetwindow.getWindowsWithTitle(nameWindow)[0]
-    win.moveTo(926, 3)
-    win.size = (435, 734)
+    win.moveTo(1328, 0)
+    win.size = (594, 1017)
     return True
 
 def distancy_between_points(p1, p2):

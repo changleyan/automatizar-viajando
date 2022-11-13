@@ -35,7 +35,9 @@ from utils import *
 # win.size = (435, 734)
 # win = pag.getWindowsWithTitle('Nox')
 # print(win[0])
+# resizeWindow('Nox')
 # region = pag.getWindowsWithTitle('Nox')[0]
+# print(region)
 # region = (region.left, region.top, region.width, region.height)
 # print(region)
 print(pag.mouseInfo())

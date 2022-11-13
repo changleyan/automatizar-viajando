@@ -1,10 +1,12 @@
+from numpy import var
+
 from selectInputFechaIda import select_input_fecha
 from selectMonth import select_month
 from selectDay import select_day
 from selectAsiento import select_asiento, select_asiento_varios
 from pyautogui import sleep, prompt
-from utils import clickButton, checkLoading, checkStay, slideScreen, resizeWindow, locateAllOnScreen, region, center, click
-import keyboard
+from utils import clickButton, checkLoading, checkStay, slideScreen, resizeWindow
+import keyboard, random
 
 
 def refresh_fecha(month, day):
@@ -58,33 +60,47 @@ def step_2_select_viaje():
         if loading is False:
             iscapacity, pos = checkStay(noCapacity)
             if iscapacity:
-                print('No hay ni pinga socio, claro si vives en el pais de pinga este....!')
-                # hacer ciclo para volver al inicio
+                # print('No hay ni pinga socio, claro si vives en el pais de pinga este....!')
+                print('No hay pasajes....!')
+                return False
             else:
                 if select_omnibus():
                     return True
     return False
 
 
-def step_3_select_asiento(varios: bool = False, cantidad : int = 2):
+def step_3_select_asiento(varios: bool = False, concurency: bool = False,  cantidad : int = 2):
     print("Step 3", varios, cantidad)
-    return select_asiento_varios(cantidad) if varios else select_asiento()
+    return select_asiento_varios(concurency, cantidad) if varios else select_asiento()
 
 
-def main():
-    month = 'Noviembre'
-    window = 'Nox'
-    day = prompt(text="", title="Entre el dia a buscar.")
+def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, cantidad: int):
+    is_capacity = step_2_select_viaje()
+    if is_capacity:
+        slideScreen()
+        step_3_select_asiento(varios, concurency, cantidad)
+    else:
+        if repesca:
+            timer = random.randrange(10, 61) if aleatory else 0
+            print("Refrescar en: " + str(timer))
+            sleep(timer)
+            btnAtras = "./parts/buttons/btnAtras.png"
+            clickButton(btnAtras)
+            checkLoading()
+            main(repesca, concurency, varios, aleatory, cantidad)
 
-    if day is not None:
-        resizeWindow(window)
+def main(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2):
+    if repesca:
+        main_aux(repesca, concurency, varios, aleatory, cantidad)
+    else:
+        month = 'Noviembre'
+        day = prompt(text="", title="Entre el dia a buscar.")
+        if day is not None:
+            step_1_select_day(month, day)
+            main_aux(repesca, concurency, varios, aleatory, cantidad)
 
-        is_day = step_1_select_day(month, day)
-
-        is_capacity = step_2_select_viaje()
-        if is_capacity:
-            slideScreen()
-            step_3_select_asiento(True, 6)
 
 if __name__ == '__main__':
-    main()
+    window = 'Nox'
+    resizeWindow(window)
+    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4)
