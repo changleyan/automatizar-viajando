@@ -54,12 +54,14 @@ def select_omnibus():
 def step_2_select_viaje():
     btnBuscar = "./parts/buttons/buscar.png"
     noCapacity = "./parts/omnibus/noHayPasaje.png"
+    serverError = "./parts/omnibus/errorServidor.png"
 
     if clickButton(btnBuscar):
         loading = checkLoading()
         if loading is False:
             iscapacity, pos = checkStay(noCapacity)
-            if iscapacity:
+            error, pos = checkStay(serverError)
+            if iscapacity or error:
                 # print('No hay ni pinga socio, claro si vives en el pais de pinga este....!')
                 print('No hay pasajes....!')
                 return False
@@ -81,7 +83,7 @@ def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, canti
         step_3_select_asiento(varios, concurency, cantidad)
     else:
         if repesca:
-            timer = random.randrange(10, 61) if aleatory else 0
+            timer = random.randrange(5, 15) if aleatory else 0
             print("Refrescar en: " + str(timer))
             sleep(timer)
             btnAtras = "./parts/buttons/btnAtras.png"
