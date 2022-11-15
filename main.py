@@ -76,33 +76,34 @@ def step_3_select_asiento(varios: bool = False, concurency: bool = False,  canti
     return select_asiento_varios(concurency, cantidad) if varios else select_asiento()
 
 
-def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, cantidad: int):
+def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, cantidad: int, time: int):
     is_capacity = step_2_select_viaje()
     if is_capacity:
         slideScreen()
         step_3_select_asiento(varios, concurency, cantidad)
     else:
         if repesca:
-            timer = random.randrange(5, 15) if aleatory else 0
+            print(time)
+            timer = random.randrange(1, time) if aleatory else 0
             print("Refrescar en: " + str(timer))
             sleep(timer)
             btnAtras = "./parts/buttons/btnAtras.png"
             clickButton(btnAtras)
             checkLoading()
-            main(repesca, concurency, varios, aleatory, cantidad)
+            main(repesca, concurency, varios, aleatory, cantidad, time)
 
-def main(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2):
+def main(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10):
     if repesca:
-        main_aux(repesca, concurency, varios, aleatory, cantidad)
+        main_aux(repesca, concurency, varios, aleatory, cantidad, time)
     else:
         month = 'Noviembre'
         day = prompt(text="", title="Entre el dia a buscar.")
         if day is not None:
             step_1_select_day(month, day)
-            main_aux(repesca, concurency, varios, aleatory, cantidad)
+            main_aux(repesca, concurency, varios, aleatory, cantidad, time)
 
 
 if __name__ == '__main__':
     window = 'Nox'
     resizeWindow(window)
-    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4)
+    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4, time=50)
