@@ -19,7 +19,7 @@ def get_position(image: str, raiseException: bool = True, confidence: float = 0.
         position = pag.locateCenterOnScreen(image, confidence=confidence, region=region)
         # position = pag.locateCenterOnScreen(image, confidence=0.8)
         if position is None and raiseException:
-            print(f'{image} not found on screen...')
+            # print(f'{image} not found on screen...')
             return None
         else:
             return position
@@ -27,18 +27,18 @@ def get_position(image: str, raiseException: bool = True, confidence: float = 0.
         raise Exception(e)
 
 def checkLoading(imagen: str = "./parts/genericLoader.png"):
-    print('Loading...')
+    # print('Loading...')
     position = get_position(imagen, False)
     while position is not None:
         sleep(0.1)
         position = get_position(imagen, False)
-    print('Finish Loading...')
+    # print('Finish Loading...')
     sleep(0.1)
     return False
 
 def clickButton(imagen: str, confidence:float = 0.8):
     position = get_position(imagen, confidence=confidence)
-    print(f'Step: {imagen}, position: {position} ....!')
+    # print(f'Step: {imagen}, position: {position} ....!')
     if position is not None:
         click(position)
     else:
@@ -48,7 +48,7 @@ def clickButton(imagen: str, confidence:float = 0.8):
 
 def checkStay(imagen: str):
     position = get_position(imagen, False, 0.9)
-    print(f'Check stay: {imagen}, position: {position} ....!')
+    # print(f'Check stay: {imagen}, position: {position} ....!')
     sleep(0.1)
     if position is None:
         return False, None
