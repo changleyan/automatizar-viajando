@@ -40,7 +40,7 @@ def select_asiento_varios(concurency: bool, cantidad: int):
         next = True
         ciclos = 2
         while next:
-            print(cantidad, total, next, restart, ciclos)
+            # print(cantidad, total, next, restart, ciclos)
             total -= 1
             position = center(vacios[total])
             click(position)

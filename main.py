@@ -72,7 +72,7 @@ def step_2_select_viaje():
 
 
 def step_3_select_asiento(varios: bool = False, concurency: bool = False,  cantidad : int = 2):
-    print("Step 3", varios, cantidad)
+    # print("Step 3", varios, cantidad)
     return select_asiento_varios(concurency, cantidad) if varios else select_asiento()
 
 
@@ -105,4 +105,4 @@ def main(repesca: bool = False, concurency: bool = False, varios: bool = False, 
 if __name__ == '__main__':
     window = 'Nox'
     resizeWindow(window)
-    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4, time=50)
+    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4, time=20)
