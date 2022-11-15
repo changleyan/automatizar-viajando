@@ -83,7 +83,6 @@ def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, canti
         step_3_select_asiento(varios, concurency, cantidad)
     else:
         if repesca:
-            print(time)
             timer = random.randrange(1, time) if aleatory else 0
             print("Refrescar en: " + str(timer))
             sleep(timer)

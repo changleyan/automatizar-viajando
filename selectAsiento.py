@@ -48,12 +48,13 @@ def select_asiento_varios(concurency: bool, cantidad: int):
                 sleep(0.1)
             next, nextPosition = checkStay(btnSiguiente)
             if next:
-                cantidad -= 1
-            if total == 0:
-                total == restart
-                ciclos -= 1
-            if cantidad == 0 or ciclos == 0:
                 next = False
+            #     cantidad -= 1
+            # if total == 0:
+            #     total == restart
+            #     ciclos -= 1
+            # if cantidad == 0 or ciclos == 0:
+            #     next = False
 
     else:
         while cantidad > 0:
