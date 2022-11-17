@@ -38,9 +38,7 @@ def select_asiento_varios(concurency: bool, cantidad: int):
 
     if concurency:
         next = True
-        ciclos = 2
         while next:
-            # print(cantidad, total, next, restart, ciclos)
             total -= 1
             position = center(vacios[total])
             click(position)
@@ -49,12 +47,8 @@ def select_asiento_varios(concurency: bool, cantidad: int):
             next, nextPosition = checkStay(btnSiguiente)
             if next:
                 next = False
-            #     cantidad -= 1
-            # if total == 0:
-            #     total == restart
-            #     ciclos -= 1
-            # if cantidad == 0 or ciclos == 0:
-            #     next = False
+            if total == 0:
+                total = restart
 
     else:
         while cantidad > 0:
@@ -67,7 +61,7 @@ def select_asiento_varios(concurency: bool, cantidad: int):
         next, nextPosition = checkStay(btnSiguiente)
         if next:
             click(nextPosition)
-            print('Urra, tenemos pasaje................')
+            print('Tenemos pasaje................')
             playsound("C:/Users/CHANG/WORK/automatizar-viajando-main/parts/notificacion.wav")
             return True
 

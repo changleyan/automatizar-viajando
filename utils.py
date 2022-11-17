@@ -1,4 +1,3 @@
-from pyautogui import *
 import pyautogui as pag
 import time
 import win32con
