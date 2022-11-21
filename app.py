@@ -103,6 +103,11 @@ def main(repesca: bool = False, concurency: bool = False, varios: bool = False, 
             step_1_select_day(month, day)
             main_aux(repesca, concurency, varios, aleatory, cantidad, time, capture)
 
+def app(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10, capture: bool = False):
+    window = 'Nox'
+    resizeWindow(window)
+    main(repesca, concurency, varios, aleatory, cantidad, time, capture)
+
 
 if __name__ == '__main__':
     window = 'Nox'

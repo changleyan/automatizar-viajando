@@ -1,5 +1,5 @@
 from tkinter import *
-from app import main
+from app import app
 
 window = Tk()
 
@@ -39,7 +39,7 @@ t2.place(x=150, y=250)
 def find():
     cantidad = int(t1.get())
     time = int(t2.get())
-    main(repesca.get(), concurency.get(), varios.get(), aleatory.get(), cantidad, time, capture.get())
+    app(repesca.get(), concurency.get(), varios.get(), aleatory.get(), cantidad, time, capture.get())
 
 def close():
     quit()
