@@ -28,7 +28,7 @@ def select_asiento():
 def select_varios_aux():
     pass
 
-def select_asiento_varios(concurency: bool, cantidad: int):
+def select_asiento_varios(concurency: bool, cantidad: int, varios: bool):
     asientoVacio = "./parts/asientos/asientov.png"
     btnSiguiente = "./parts/buttons/btnSiguiente.png"
 
@@ -36,7 +36,7 @@ def select_asiento_varios(concurency: bool, cantidad: int):
     total = restart = len(vacios)
     cantidad = cantidad if (total > cantidad) else total
 
-    if concurency:
+    if concurency or not varios:
         next = True
         while next:
             total -= 1

@@ -75,7 +75,7 @@ def step_2_select_viaje(capture: bool):
 
 
 def step_3_select_asiento(varios: bool = False, concurency: bool = False,  cantidad : int = 2):
-    return select_asiento_varios(concurency, cantidad) if varios else select_asiento()
+    return select_asiento_varios(concurency, cantidad, varios)
 
 
 def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, cantidad: int, time: int, capture: bool):
