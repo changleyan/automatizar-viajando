@@ -54,13 +54,15 @@ def step_2_select_viaje(capture: bool):
     btnBuscar = "./parts/buttons/buscar.png"
     noCapacity = "./parts/omnibus/noHayPasaje.png"
     serverError = "./parts/omnibus/errorServidor.png"
+    serverFailConexion = "./parts/omnibus/noConexion.png"
 
     if clickButton(btnBuscar):
         loading = checkLoading()
         if loading is False:
             iscapacity, pos = checkStay(noCapacity)
-            error, pos = checkStay(serverError)
-            if iscapacity or error:
+            error, pos1 = checkStay(serverError)
+            errorConexion, pos1 = checkStay(serverFailConexion)
+            if iscapacity or error or errorConexion:
                 print('No hay pasajes....!')
                 return False
             else:
