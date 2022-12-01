@@ -62,7 +62,7 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool):
         if next:
             click(nextPosition)
             print('Tenemos pasaje................')
-            playsound("C:/Users/CHANG/WORK/automatizar-viajando-main/parts/notificacion.wav")
+            playsound("C:/Users/CHANG/WORK/viajando/automatizar-viajando/parts/notificacion.wav")
             return True
 
     return False
