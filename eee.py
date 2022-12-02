@@ -3,7 +3,8 @@
 # import pygetwindow
 from utils import *
 from datetime import datetime
-
+from playsound import playsound
+from pathlib import Path
 
 
 
@@ -42,10 +43,12 @@ from datetime import datetime
 # region = (region.left, region.top, region.width, region.height)
 # print(region)
 # print(pag.mouseInfo())
-dt = datetime.now()
-ts = datetime.timestamp(dt)
-ruta = "C:/Users/CHANG/Pictures/Pasajes/{}.png".format(ts)
-pag.screenshot(ruta, region=region)
+notification_route = "{}/parts/notificacion.wav".format(Path().absolute())
+playsound(notification_route)
+# dt = datetime.now()
+# ts = datetime.timestamp(dt)
+# ruta = "C:/Users/CHANG/Pictures/Pasajes/{}.png".format(ts)
+# pag.screenshot(ruta, region=region)
 # print(pag.Window(hWnd=263542))
 # print(pag.mouseInfo())
 # a = get_position('./parts/days/27.png')

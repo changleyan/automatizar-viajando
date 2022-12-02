@@ -1,5 +1,6 @@
 from utils import click, checkLoading, checkStay, sleep, distancy_between_points, locateAllOnScreen, region, center
 from playsound import playsound
+from pathlib import Path
 
 def select_asiento():
     asientoVacio = "./parts/asientos/asientov.png"
@@ -62,7 +63,8 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool):
         if next:
             click(nextPosition)
             print('Tenemos pasaje................')
-            playsound("C:/Users/CHANG/WORK/viajando/automatizar-viajando/parts/notificacion.wav")
+            notification_route = "{}/parts/notificacion.wav".format(Path().absolute())
+            playsound(notification_route)
             return True
 
     return False

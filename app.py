@@ -50,11 +50,12 @@ def select_omnibus():
     return False
 
 
-def step_2_select_viaje(capture: bool):
+def step_2_select_viaje(capture: bool, exactDay: bool):
     btnBuscar = "./parts/buttons/buscar.png"
     noCapacity = "./parts/omnibus/noHayPasaje.png"
     serverError = "./parts/omnibus/errorServidor.png"
     serverFailConexion = "./parts/omnibus/noConexion.png"
+    exactDayFail = "./parts/omnibus/exactDayFail.png"
 
     if clickButton(btnBuscar):
         loading = checkLoading()
@@ -62,8 +63,12 @@ def step_2_select_viaje(capture: bool):
             iscapacity, pos = checkStay(noCapacity)
             error, pos1 = checkStay(serverError)
             errorConexion, pos1 = checkStay(serverFailConexion)
+            if exactDay:
+                isNotExactDay, pos1 = checkStay(exactDayFail)
+                if isNotExactDay:
+                    return False
             if iscapacity or error or errorConexion:
-                print('No hay pasajes....!')
+                # print('No hay pasajes....!')
                 return False
             else:
                 if capture:
@@ -80,8 +85,8 @@ def step_3_select_asiento(varios: bool = False, concurency: bool = False,  canti
     return select_asiento_varios(concurency, cantidad, varios)
 
 
-def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, cantidad: int, time: int, capture: bool):
-    is_capacity = step_2_select_viaje(capture)
+def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, cantidad: int, time: int, capture: bool, exactDay:bool):
+    is_capacity = step_2_select_viaje(capture, exactDay)
     if is_capacity:
         slideScreen()
         step_3_select_asiento(varios, concurency, cantidad)
@@ -93,22 +98,22 @@ def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, canti
             btnAtras = "./parts/buttons/btnAtras.png"
             clickButton(btnAtras)
             checkLoading()
-            main(repesca, concurency, varios, aleatory, cantidad, time, capture)
+            main(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
 
-def main(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10, capture: bool = False):
+def main(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10, capture: bool = False, exactDay: bool = False):
     if repesca:
-        main_aux(repesca, concurency, varios, aleatory, cantidad, time, capture)
+        main_aux(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
     else:
         month = 'Noviembre'
         day = prompt(text="", title="Entre el dia a buscar.")
         if day is not None:
             step_1_select_day(month, day)
-            main_aux(repesca, concurency, varios, aleatory, cantidad, time, capture)
+            main_aux(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
 
-def app(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10, capture: bool = False):
+def app(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10, capture: bool = False, exactDay: bool = False):
     window = 'Nox'
     resizeWindow(window)
-    main(repesca, concurency, varios, aleatory, cantidad, time, capture)
+    main(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
 
 
 if __name__ == '__main__':
@@ -121,4 +126,5 @@ if __name__ == '__main__':
     # cantidad son la cantidad de asientos que se kieren coger, funciona con la opcion varios en true
     # time es el tiempo maximo a esperar para refrescar va desde 1 hasta ese numero aleatoriamente
     # capture para que capture los datos del omnibus que se seleciona
-    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4, time=40, capture=True)
+    # exactDay para que si no hay pasaejs para ese dia no coja el de otros
+    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4, time=40, capture=True, exactDay=False)
