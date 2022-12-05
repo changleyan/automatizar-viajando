@@ -11,14 +11,14 @@ from pathlib import Path
 # pag.moveTo(1221,600, duration=0.1)
 # pag.dragTo(1221,300, button='left', duration=0.1)
 
-# data =pag.locateCenterOnScreen('./parts/omnibus/asientov.png', confidence=0.8)
+# data =pag.locateCenterOnScreen('./assets/asientoVacio.png', confidence=0.8)
 # print('data:', data)
 
 # print("position")
-# position = get_position('./parts/days/27.png')
-# asientoVacio = "./parts/asientos/asientov.png"
-# btnSiguiente = "./parts/buttons/siguiente.png"
-#
+# position = get_position('./assets/days/27.png')
+# asientoVacio = "./assets/asientoVacio.png"
+# # btnSiguiente = "./assets/siguiente.png"
+# #
 # vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.9))
 #
 # print(vacios)
@@ -29,6 +29,14 @@ from pathlib import Path
 #     click(position)
 #     sleep(0.1)
 #     checkLoading()
+#
+# timer = 0
+# while True:
+#     print("Waiting for" + str(0))
+#     timer += 1;
+#     sleep(2)
+#     data =pag.locateCenterOnScreen('./assets/load.png', confidence=0.8)
+#     print('data:', data)
     # pag.moveTo(position, duration=0.2)
 # pag.moveTo(position)
 # pag.click()
@@ -42,21 +50,27 @@ from pathlib import Path
 # print(region)
 # region = (region.left, region.top, region.width, region.height)
 # print(region)
+pag.moveTo(1610, 670, duration=0.1)
+pag.dragTo(1610, 500, button='left', duration=0.5)
+sleep(0.15)
 # print(pag.mouseInfo())
-notification_route = "{}/parts/notificacion.wav".format(Path().absolute())
-playsound(notification_route)
+# notification_route = "{}/assets/notificacion.wav".format(Path().absolute())
+# notification_route = notification_route.replace('\'' , "/")
+# print(notification_route)
+# # playsound()
+# playsound("C:/Users/CHANG/WORK/viajando/automatizar-viajando/assets/notificacion.wav")
 # dt = datetime.now()
 # ts = datetime.timestamp(dt)
 # ruta = "C:/Users/CHANG/Pictures/Pasajes/{}.png".format(ts)
 # pag.screenshot(ruta, region=region)
 # print(pag.Window(hWnd=263542))
 # print(pag.mouseInfo())
-# a = get_position('./parts/days/27.png')
+# a = get_position('./assets/days/27.png')
 # print(a)
 
 
 # day = 30
-# day = "./parts/days/{}.png".format(day)
+# day = "./assets/days/{}.png".format(day)
 # print(day)
 # l =clickButton(day, 0.99)
 # print(l)

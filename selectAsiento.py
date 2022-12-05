@@ -3,9 +3,9 @@ from playsound import playsound
 from pathlib import Path
 
 def select_asiento():
-    asientoVacio = "./parts/asientos/asientov.png"
-    asientoReservado = "./parts/asientos/asientor.png"
-    btnSiguiente = "./parts/buttons/siguiente.png"
+    asientoVacio = "./assets/asientoVacio.png"
+    asientoReservado = "./assets/asientoMarcado.png"
+    btnSiguiente = "./assets/btnSiguiente.png"
 
     vacio, vacioPosition = checkStay(asientoVacio)
     if vacio:
@@ -29,9 +29,9 @@ def select_asiento():
 def select_varios_aux():
     pass
 
-def select_asiento_varios(concurency: bool, cantidad: int, varios: bool):
-    asientoVacio = "./parts/asientos/asientov.png"
-    btnSiguiente = "./parts/buttons/btnSiguiente.png"
+def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongNotification:bool):
+    asientoVacio = "./assets/asientoVacio.png"
+    btnSiguiente = "./assets/btnSiguiente.png"
 
     vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.9))
     total = restart = len(vacios)
@@ -62,9 +62,16 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool):
         next, nextPosition = checkStay(btnSiguiente)
         if next:
             click(nextPosition)
-            print('Tenemos pasaje................')
-            notification_route = "{}/parts/notificacion.wav".format(Path().absolute())
-            playsound(notification_route)
+            print('Ta cogio................')
+            if strongNotification:
+                notification_route = "{}\\assets\\notificacion-strong.wav".format(Path().absolute()).replace(r"/","\"")
+                cant = 10
+                while cant > 0:
+                    cant -= 1
+                    playsound(notification_route)
+            else:
+                notification_route = "{}\\assets\\notificacion-lite.wav".format(Path().absolute()).replace(r"/","\"")
+                playsound(notification_route)
             return True
 
     return False

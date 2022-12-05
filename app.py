@@ -1,124 +1,124 @@
-from selectInputFechaIda import select_input_fecha
-from selectMonth import select_month
-from selectDay import select_day
-from selectAsiento import select_asiento, select_asiento_varios
-from pyautogui import sleep, prompt
-from utils import clickButton, checkLoading, checkStay, slideScreen, resizeWindow, pag, region
-import keyboard, random
+# from selectInputFechaIda import select_input_fecha
+# from selectMonth import select_month
+# from selectDay import select_day
+# import keyboard
+from selectAsiento import select_asiento_varios
+from pyautogui import sleep
+from utils import clickButton, checkLoading, checkStay, slideScreen, pag, region, click
 from datetime import datetime
 
 
-def refresh_fecha(month, day):
-    # buscar y seleccionar el boton de refrescar
-    input = select_input_fecha()
-    while input is False or keyboard.is_pressed('q'):
-        sleep(0.5)
-        input = select_input_fecha()
-    return select_month_day(month, day)
+# def refresh_fecha(month, day):
+#     # buscar y seleccionar el boton de refrescar
+#     input = select_input_fecha()
+#     while input is False or keyboard.is_pressed('q'):
+#         sleep(0.5)
+#         input = select_input_fecha()
+#     return select_month_day(month, day)
+#
+#
+# def select_month_day(month, day):
+#     btnAceptar = "./assets/aceptar.png"
+#     btnCancelar = "./assets/cancelar.png"
+#
+#     if select_month(month):
+#         # buscar y seleccionar dia
+#         if select_day(day):
+#             # buscar y seleccionar el boton de aceptar
+#             clickButton(btnAceptar)
+#             return True
+#         else:
+#             # cancelar, esperar 2 segundos y volver a buscar
+#             clickButton(btnCancelar)
+#             sleep(1)
+#             refresh_fecha(month, day)
+#     return False
+#
+#
+# def step_1_select_day(month, day):
+#     return refresh_fecha(month, day)
 
 
-def select_month_day(month, day):
-    btnAceptar = "./parts/buttons/aceptar.png"
-    btnCancelar = "./parts/buttons/cancelar.png"
+def click_to_omnibus(capture: bool, position):
+    if capture:
+        dt = datetime.now()
+        ts = datetime.timestamp(dt)
+        ruta = "C:/Users/CHANG/Pictures/Pasajes/{}.png".format(ts)
+        pag.screenshot(ruta, region=region)
 
-    if select_month(month):
-        # buscar y seleccionar dia
-        if select_day(day):
-            # buscar y seleccionar el boton de aceptar
-            clickButton(btnAceptar)
-            return True
-        else:
-            # cancelar, esperar 2 segundos y volver a buscar
-            clickButton(btnCancelar)
-            sleep(1)
-            refresh_fecha(month, day)
-    return False
-
-
-def step_1_select_day(month, day):
-    return refresh_fecha(month, day)
-
-
-def select_omnibus():
-    btnOmnibus = "./parts/buttons/nextOmnibus.png"
     sleep(0.1)
-    clickButton(btnOmnibus)
-    loading = checkLoading(btnOmnibus)
+    click(position)
+    sleep(0.2)
+    loading = checkLoading()
     sleep(0.1)
     if loading is False:
         return True
     return False
 
-
-def step_2_select_viaje(capture: bool, exactDay: bool):
-    btnBuscar = "./parts/buttons/buscar.png"
-    noCapacity = "./parts/omnibus/noHayPasaje.png"
-    serverError = "./parts/omnibus/errorServidor.png"
-    serverFailConexion = "./parts/omnibus/noConexion.png"
-    exactDayFail = "./parts/omnibus/exactDayFail.png"
+def select_viaje(capture: bool, exactDay: bool, checkTrain:bool):
+    btnBuscar = "./assets/btnBuscar.png"        #boton de buscar
+    exactDayFail = "./assets/exactDayFail.png"  #es el mensaje que sale cuando no hay pasajes para ese dia
+    existCapacity = "./assets/btnOmnibus.png"   #es el mensaje que sale cuando no hay pasajes aunque no sea del dia
+    trainMenu = "./assets/btnTren.png"          #boton del menu de tren
 
     if clickButton(btnBuscar):
         loading = checkLoading()
         if loading is False:
-            iscapacity, pos = checkStay(noCapacity)
-            error, pos1 = checkStay(serverError)
-            errorConexion, pos1 = checkStay(serverFailConexion)
+            position = None
+            iscapacity, position = checkStay(existCapacity)
             if exactDay:
+                # veo si no hay en omnibus
                 isNotExactDay, pos1 = checkStay(exactDayFail)
                 if isNotExactDay:
+                    # si checkTrain es true entonces verifico en el tren
+                    if checkTrain:
+                        # paso al menu del tren
+                        if clickButton(trainMenu):
+                            # verifico que exista
+                            iscapacity, position = checkStay(existCapacity)
+                            if iscapacity is False:
+                                return False
+                            else:
+                                isNotExactDay, pos1 = checkStay(exactDayFail)
+                                if isNotExactDay:
+                                    return False
+                    else:
+                        return False
+
+            if iscapacity is False:
+                # si checkTrain es true entonces verifico en el tren
+                if checkTrain:
+                    # paso al menu del tren
+                    if clickButton(trainMenu):
+                        iscapacity, position = checkStay(existCapacity)
+                        if iscapacity is False:
+                            return False
+                        else:
+                            return click_to_omnibus(capture, position)
+                else:
                     return False
-            if iscapacity or error or errorConexion:
-                # print('No hay pasajes....!')
-                return False
             else:
-                if capture:
-                    dt = datetime.now()
-                    ts = datetime.timestamp(dt)
-                    ruta = "C:/Users/CHANG/Pictures/Pasajes/{}.png".format(ts)
-                    pag.screenshot(ruta, region=region)
-                if select_omnibus():
-                    return True
+                return click_to_omnibus(capture, position)
     return False
 
 
-def step_3_select_asiento(varios: bool = False, concurency: bool = False,  cantidad : int = 2):
-    return select_asiento_varios(concurency, cantidad, varios)
-
-
-def main_aux(repesca: bool, concurency: bool, varios:bool, aleatory: bool, cantidad: int, time: int, capture: bool, exactDay:bool):
-    is_capacity = step_2_select_viaje(capture, exactDay)
+def main(repesca: bool, concurency: bool, varios:bool, cantidad: int, capture: bool, exactDay:bool, checkTrain:bool, strongNotification:bool):
+    is_capacity = select_viaje(capture, exactDay, checkTrain)
     if is_capacity:
         slideScreen()
-        step_3_select_asiento(varios, concurency, cantidad)
+        return select_asiento_varios(concurency, cantidad, varios, strongNotification)
     else:
         if repesca:
-            timer = random.randrange(1, time) if aleatory else 0
-            print("Refrescar en: " + str(timer))
-            sleep(timer)
-            btnAtras = "./parts/buttons/btnAtras.png"
+            btnAtras = "./assets/btnAtras.png"
             clickButton(btnAtras)
             checkLoading()
-            main(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
-
-def main(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10, capture: bool = False, exactDay: bool = False):
-    if repesca:
-        main_aux(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
-    else:
-        month = 'Noviembre'
-        day = prompt(text="", title="Entre el dia a buscar.")
-        if day is not None:
-            step_1_select_day(month, day)
-            main_aux(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
-
-def app(repesca: bool = False, concurency: bool = False, varios: bool = False, aleatory: bool = False, cantidad:int = 2, time:int = 10, capture: bool = False, exactDay: bool = False):
-    window = 'Nox'
-    resizeWindow(window)
-    main(repesca, concurency, varios, aleatory, cantidad, time, capture, exactDay)
-
+            return False
+def app(repesca: bool = False, concurency: bool = False, varios: bool = False, cantidad:int = 2, capture: bool = False, exactDay: bool = False, checkTrain: bool = True, strongNotification:bool = True):
+    return main(repesca, concurency, varios, cantidad, capture, exactDay, checkTrain, strongNotification)
 
 if __name__ == '__main__':
-    window = 'Nox'
-    resizeWindow(window)
+    # window = 'Nox'
+    # resizeWindow(window)
     # repesca es para que cuando no vea omnibus disponibles vuelva a la pagian principal
     # concurrency es para que itere sobre los asientos hasta encontrar uno disponible (debe activarse a la hora pico 8:30)
     # varios es para que escoja varios asientos, esta opcion funiona cuando concurency esta en False
@@ -127,4 +127,5 @@ if __name__ == '__main__':
     # time es el tiempo maximo a esperar para refrescar va desde 1 hasta ese numero aleatoriamente
     # capture para que capture los datos del omnibus que se seleciona
     # exactDay para que si no hay pasaejs para ese dia no coja el de otros
-    main(repesca=True, concurency=True, varios=True, aleatory=True, cantidad=4, time=40, capture=True, exactDay=False)
+    # checkTrain verifica si hay pasajes en tren
+    main(repesca=True, concurency=True, varios=True, cantidad=4, capture=True, exactDay=False, checkTrain=True)

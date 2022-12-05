@@ -26,12 +26,12 @@ def get_position(image: str, raiseException: bool = True, confidence: float = 0.
     except OSError as e:
         raise Exception(e)
 
-def checkLoading(imagen: str = "./parts/genericLoader.png"):
+def checkLoading(imagen: str = "./assets/genericLoader.png"):
     # print('Loading...')
-    position = get_position(imagen, False)
+    position = get_position(imagen, False, confidence=0.7)
     while position is not None:
         sleep(0.1)
-        position = get_position(imagen, False)
+        position = get_position(imagen, False, confidence=0.7)
     # print('Finish Loading...')
     sleep(0.1)
     return False
@@ -57,8 +57,8 @@ def checkStay(imagen: str):
 def slideScreen():
     print('Slide...')
     sleep(0.1)
-    pag.moveTo(1610, 970, duration=0.1)
-    pag.dragTo(1610, 570, button='left', duration=0.1)
+    pag.moveTo(1610, 670, duration=0.1)
+    pag.dragTo(1610, 50, button='left', duration=0.3)
     sleep(0.15)
 
 def resizeWindow(nameWindow):
