@@ -61,7 +61,7 @@ t2.insert(END, '25')
 t2.place(x=150, y=320)
 
 
-label= Label(window, text="Refrescar en: 0 segundos", font=('Helvetica 13'))
+label= Label(window, text="Detenido", font=('Helvetica 13'))
 label.place(x=50, y=430)
 
 def start(stop):
@@ -77,20 +77,24 @@ def start(stop):
 
     alternar = aleatory.get()
     while True:
+        label.config(text="Refrescando....", font=('Helvetica 13'))
         result = app(repesca.get(), concurency.get(), varios.get(), cantidad, capture.get(), exactDay.get(), checkTrain.get(), strongNotification.get())
         if result:
             print("Stop")
             label.config(text="Refrescar en: {} segundos".format(0), font=('Helvetica 13'))
             break
         # tiempo antes de volver a ejecutar
-        timer = random.randrange(1, time) if alternar else 0
-        print("Refrescar en: " + str(timer))
-        label.config(text="Refrescar en: {} segundos".format(timer), font=('Helvetica 13'))
-        sleep(timer)
-
+        cont = random.randrange(1, time) if alternar else 0
+        print("Refrescar en: " + str(cont))
+        cont -= 1
+        while cont > 0:
+            label.config(text="Refrescar en: {} segundos".format(cont), font=('Helvetica 13'))
+            cont -= 1
+            sleep(1)
+        label.config(text="Refrescando....", font=('Helvetica 13'))
         if stop():
             print("Stop")
-            label.config(text="Refrescar en: {} segundos".format(0), font=('Helvetica 13'))
+            label.config(text="Detenido", font=('Helvetica 13'))
             break
 
 stop_threads = False
