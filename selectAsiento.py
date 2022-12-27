@@ -1,4 +1,4 @@
-from utils import click, checkLoading, checkStay, sleep, distancy_between_points, locateAllOnScreen, region, center
+from utils import click, checkLoading, checkStay, sleep, distancy_between_points, locateAllOnScreen, region, center, slideScreen
 from playsound import playsound
 from pathlib import Path
 
@@ -35,8 +35,19 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
 
     vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.9))
     total = restart = len(vacios)
+    if total == 0:
+        slideScreen()
+        sleep(0.2)
+        vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.9))
+        total = restart = len(vacios)
+        if total == 0:
+            return False
     cantidad = cantidad if (total > cantidad) else total
 
+    if total == 0:
+        return False
+
+    # Para que coja uno solo de los que existan lo mas rapido posible
     if concurency or not varios:
         next = True
         while next:
@@ -51,13 +62,16 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
             if total == 0:
                 total = restart
 
+    # Para que itere entre los asientos marcando varios
     else:
         while cantidad > 0:
             cantidad -= 1
             position = center(vacios[cantidad])
             click(position)
             if checkLoading() is False:
-                sleep(0.1)
+                sleep(0.3)
+
+    #   Press btn Siguiente and notifi with sound
     if checkLoading() is False:
         next, nextPosition = checkStay(btnSiguiente)
         if next:

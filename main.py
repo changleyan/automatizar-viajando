@@ -20,8 +20,8 @@ def concurencyListener():
 
 # Estado iniciales
 repesca = IntVar(value=1)
-concurency = IntVar(value=0)
-varios = IntVar(value=1)
+concurency = IntVar(value=1)
+varios = IntVar(value=0)
 aleatory = IntVar(value=1)
 capture = IntVar(value=1)
 exactDay = IntVar(value=0)
@@ -72,7 +72,7 @@ def start(stop):
     stop_threads = False
 
     # redimensionando la ventana para que coincidan las imagenes
-    window = 'Nox'
+    window = 'LDPlayer'
     resizeWindow(window)
 
     alternar = aleatory.get()

@@ -105,13 +105,16 @@ def select_viaje(capture: bool, exactDay: bool, checkTrain:bool):
 def main(repesca: bool, concurency: bool, varios:bool, cantidad: int, capture: bool, exactDay:bool, checkTrain:bool, strongNotification:bool):
     is_capacity = select_viaje(capture, exactDay, checkTrain)
     if is_capacity:
-        slideScreen()
+        # slideScreen()
         return select_asiento_varios(concurency, cantidad, varios, strongNotification)
     else:
         if repesca:
             btnAtras = "./assets/btnAtras.png"
             clickButton(btnAtras)
-            checkLoading()
+            sleep(0.2)
+            click((1840, 222))
+            sleep(0.2)
+
             return False
 def app(repesca: bool = False, concurency: bool = False, varios: bool = False, cantidad:int = 2, capture: bool = False, exactDay: bool = False, checkTrain: bool = True, strongNotification:bool = True):
     return main(repesca, concurency, varios, cantidad, capture, exactDay, checkTrain, strongNotification)

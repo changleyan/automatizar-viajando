@@ -57,8 +57,8 @@ def checkStay(imagen: str):
 def slideScreen():
     print('Slide...')
     sleep(0.1)
-    pag.moveTo(1610, 670, duration=0.1)
-    pag.dragTo(1610, 50, button='left', duration=0.3)
+    pag.moveTo(1610, 980, duration=0.1)
+    pag.dragTo(1610, 50, button='left', duration=0.2)
     sleep(0.15)
 
 def resizeWindow(nameWindow):

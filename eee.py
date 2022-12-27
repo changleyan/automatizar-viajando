@@ -40,20 +40,30 @@ from pathlib import Path
     # pag.moveTo(position, duration=0.2)
 # pag.moveTo(position)
 # pag.click()
-# win = pygetwindow.getWindowsWithTitle('Nox')[0]
-# win.moveTo(926, 3)
+
+# win = pygetwindow.getWindowsWithTitle('LDPlayer')[0]
+# resizeWindow('LDPlayer')
+
+
+
+import win32gui
+#current = win32gui.GetWindowText('MEmu')
+# hwnd = win32gui.FindWindow(None, 'MEmu')
+#hwnd = win32gui.FindWindowEx(hwnd, 0, 'MEmu', None)
+# print(hwnd)
+# win32gui.MoveWindow(hwnd, 0, 0, 1000, 700, True)
 # win.size = (435, 734)
 # win = pag.getWindowsWithTitle('Nox')
-# print(win[0])
-# resizeWindow('Nox')
+# print(win)
+# resizeWindow('MEMU')
 # region = pag.getWindowsWithTitle('Nox')[0]
 # print(region)
 # region = (region.left, region.top, region.width, region.height)
 # print(region)
-pag.moveTo(1610, 670, duration=0.1)
-pag.dragTo(1610, 500, button='left', duration=0.5)
-sleep(0.15)
-# print(pag.mouseInfo())
+# pag.moveTo(1610, 670, duration=0.1)
+# pag.dragTo(1610, 500, button='left', duration=0.5)
+# sleep(0.15)
+print(pag.mouseInfo())
 # notification_route = "{}/assets/notificacion.wav".format(Path().absolute())
 # notification_route = notification_route.replace('\'' , "/")
 # print(notification_route)
