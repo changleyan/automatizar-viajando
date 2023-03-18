@@ -52,8 +52,8 @@ def click_to_omnibus(capture: bool, position):
     loading = checkLoading()
     sleep(0.1)
     if loading is False:
-        return True
-    return False
+        return True, False
+    return False, False
 
 def select_viaje(capture: bool, exactDay: bool, checkTrain:bool):
     btnBuscar = "./assets/btnBuscar.png"        #boton de buscar
@@ -77,13 +77,13 @@ def select_viaje(capture: bool, exactDay: bool, checkTrain:bool):
                             # verifico que exista
                             iscapacity, position = checkStay(existCapacity)
                             if iscapacity is False:
-                                return False
+                                return False, False
                             else:
                                 isNotExactDay, pos1 = checkStay(exactDayFail)
                                 if isNotExactDay:
-                                    return False
+                                    return False, False
                     else:
-                        return False
+                        return False, False
 
             if iscapacity is False:
                 # si checkTrain es true entonces verifico en el tren
@@ -92,18 +92,18 @@ def select_viaje(capture: bool, exactDay: bool, checkTrain:bool):
                     if clickButton(trainMenu):
                         iscapacity, position = checkStay(existCapacity)
                         if iscapacity is False:
-                            return False
+                            return False, False
                         else:
                             return click_to_omnibus(capture, position)
                 else:
-                    return False
+                    return False, False
             else:
                 return click_to_omnibus(capture, position)
-    return False
+    return False, True
 
 
 def main(repesca: bool, concurency: bool, varios:bool, cantidad: int, capture: bool, exactDay:bool, checkTrain:bool, strongNotification:bool):
-    is_capacity = select_viaje(capture, exactDay, checkTrain)
+    is_capacity, fallo = select_viaje(capture, exactDay, checkTrain)
     if is_capacity:
         # slideScreen()
         return select_asiento_varios(concurency, cantidad, varios, strongNotification)
@@ -115,7 +115,9 @@ def main(repesca: bool, concurency: bool, varios:bool, cantidad: int, capture: b
             click((1840, 222))
             sleep(0.2)
 
-            return False
+            if fallo:
+                return False, True
+            return False, False
 def app(repesca: bool = False, concurency: bool = False, varios: bool = False, cantidad:int = 2, capture: bool = False, exactDay: bool = False, checkTrain: bool = True, strongNotification:bool = True):
     return main(repesca, concurency, varios, cantidad, capture, exactDay, checkTrain, strongNotification)
 

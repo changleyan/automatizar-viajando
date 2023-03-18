@@ -41,11 +41,11 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
         vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.9))
         total = restart = len(vacios)
         if total == 0:
-            return False
+            return False, False
     cantidad = cantidad if (total > cantidad) else total
 
     if total == 0:
-        return False
+        return False, False
 
     # Para que coja uno solo de los que existan lo mas rapido posible
     if concurency or not varios:
@@ -86,6 +86,6 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
             else:
                 notification_route = "{}\\assets\\notificacion-lite.wav".format(Path().absolute()).replace(r"/","\"")
                 playsound(notification_route)
-            return True
+            return True, False
 
-    return False
+    return False, False

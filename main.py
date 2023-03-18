@@ -25,7 +25,7 @@ varios = IntVar(value=0)
 aleatory = IntVar(value=1)
 capture = IntVar(value=1)
 exactDay = IntVar(value=0)
-checkTrain = IntVar(value=1)
+checkTrain = IntVar(value=0)
 strongNotification = IntVar(value=0)
 
 
@@ -57,7 +57,7 @@ t1.place(x=150, y=280)
 lbl2 = Label(window, text='Refrescar')
 lbl2.place(x=60, y=320)
 t2=Entry()
-t2.insert(END, '25')
+t2.insert(END, '5')
 t2.place(x=150, y=320)
 
 
@@ -75,14 +75,26 @@ def start(stop):
     window = 'LDPlayer'
     resizeWindow(window)
 
+    #contar los fallos del boton buscar, para ver si falla 5 vece y detener el ciclo
+    fallos_permitidos = 5;
+
     alternar = aleatory.get()
     while True:
         label.config(text="Refrescando....", font=('Helvetica 13'))
-        result = app(repesca.get(), concurency.get(), varios.get(), cantidad, capture.get(), exactDay.get(), checkTrain.get(), strongNotification.get())
+        result, fallo = app(repesca.get(), concurency.get(), varios.get(), cantidad, capture.get(), exactDay.get(), checkTrain.get(), strongNotification.get())
         if result:
             print("Stop")
             label.config(text="Refrescar en: {} segundos".format(0), font=('Helvetica 13'))
             break
+        #ver si esta fallando al encontrar el buscar, esto kiere decir que o se cerro la app u ocurrio algun otro error
+        if fallo:
+            if fallos_permitidos <= 0:
+                print("Stop")
+                label.config(text="Refrescar en: {} segundos".format(0), font=('Helvetica 13'))
+                break
+            fallos_permitidos -= 1
+        if not fallo:
+            fallos_permitidos = 5
         # tiempo antes de volver a ejecutar
         cont = random.randrange(1, time) if alternar else 0
         print("Refrescar en: " + str(cont))
