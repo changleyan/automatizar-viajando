@@ -33,7 +33,7 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
     asientoVacio = "./assets/asientoVacio.png"
     btnSiguiente = "./assets/btnSiguiente.png"
 
-    vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.9))
+    vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.85))
     total = restart = len(vacios)
     if total == 0:
         slideScreen()
