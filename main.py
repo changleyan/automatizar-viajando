@@ -57,7 +57,7 @@ t1.place(x=150, y=280)
 lbl2 = Label(window, text='Refrescar')
 lbl2.place(x=60, y=320)
 t2=Entry()
-t2.insert(END, '5')
+t2.insert(END, '3')
 t2.place(x=150, y=320)
 
 

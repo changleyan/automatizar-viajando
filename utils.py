@@ -6,7 +6,8 @@ import win32api
 import pygetwindow
 import math
 
-region = (1328, 0, 594, 1017)
+region = (0, 3, 594, 1017)
+
 
 def click(position):
     win32api.SetCursorPos(position)
@@ -30,10 +31,10 @@ def checkLoading(imagen: str = "./assets/genericLoader.png"):
     # print('Loading...')
     position = get_position(imagen, False, confidence=0.7)
     while position is not None:
-        sleep(0.1)
+        sleep(0.2)
         position = get_position(imagen, False, confidence=0.7)
     # print('Finish Loading...')
-    sleep(0.1)
+    sleep(0.2)
     return False
 
 def clickButton(imagen: str, confidence:float = 0.8):
@@ -47,23 +48,23 @@ def clickButton(imagen: str, confidence:float = 0.8):
     return True
 
 def checkStay(imagen: str):
-    position = get_position(imagen, False, 0.9)
-    # print(f'Check stay: {imagen}, position: {position} ....!')
-    sleep(0.1)
+    position = get_position(imagen, False, 0.85)
+    #print(f'Check stay: {imagen}, position: {position} ....!')
+    sleep(0.2)
     if position is None:
         return False, None
     return True, position
 
 def slideScreen():
     print('Slide...')
-    sleep(0.1)
-    pag.moveTo(1610, 980, duration=0.1)
-    pag.dragTo(1610, 50, button='left', duration=0.2)
-    sleep(0.15)
+    sleep(0.2)
+    pag.moveTo(280,850, duration=0.1)
+    pag.dragTo(280,105, button='left', duration=0.8)
+    sleep(0.2)
 
 def resizeWindow(nameWindow):
     win = pygetwindow.getWindowsWithTitle(nameWindow)[0]
-    win.moveTo(1328, 0)
+    win.moveTo(0, 3)
     win.size = (594, 1017)
     return True
 

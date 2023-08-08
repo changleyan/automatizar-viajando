@@ -1,42 +1,7 @@
-# from selectInputFechaIda import select_input_fecha
-# from selectMonth import select_month
-# from selectDay import select_day
-# import keyboard
 from selectAsiento import select_asiento_varios
 from pyautogui import sleep
 from utils import clickButton, checkLoading, checkStay, slideScreen, pag, region, click
 from datetime import datetime
-
-
-# def refresh_fecha(month, day):
-#     # buscar y seleccionar el boton de refrescar
-#     input = select_input_fecha()
-#     while input is False or keyboard.is_pressed('q'):
-#         sleep(0.5)
-#         input = select_input_fecha()
-#     return select_month_day(month, day)
-#
-#
-# def select_month_day(month, day):
-#     btnAceptar = "./assets/aceptar.png"
-#     btnCancelar = "./assets/cancelar.png"
-#
-#     if select_month(month):
-#         # buscar y seleccionar dia
-#         if select_day(day):
-#             # buscar y seleccionar el boton de aceptar
-#             clickButton(btnAceptar)
-#             return True
-#         else:
-#             # cancelar, esperar 2 segundos y volver a buscar
-#             clickButton(btnCancelar)
-#             sleep(1)
-#             refresh_fecha(month, day)
-#     return False
-#
-#
-# def step_1_select_day(month, day):
-#     return refresh_fecha(month, day)
 
 
 def click_to_omnibus(capture: bool, position):
@@ -104,15 +69,16 @@ def select_viaje(capture: bool, exactDay: bool, checkTrain:bool):
 
 def main(repesca: bool, concurency: bool, varios:bool, cantidad: int, capture: bool, exactDay:bool, checkTrain:bool, strongNotification:bool):
     is_capacity, fallo = select_viaje(capture, exactDay, checkTrain)
+    #print(f'Is capacity: {is_capacity}, fallo: {fallo} ....!')
     if is_capacity:
         # slideScreen()
-        return select_asiento_varios(concurency, cantidad, varios, strongNotification)
+        return select_asiento_varios(concurency, cantidad, varios, strongNotification, checkTrain)
     else:
         if repesca:
             btnAtras = "./assets/btnAtras.png"
             clickButton(btnAtras)
             sleep(0.2)
-            click((1840, 222))
+            click((500, 115))
             sleep(0.2)
 
             if fallo:
