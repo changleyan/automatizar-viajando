@@ -36,7 +36,7 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
     btnSiguiente = "./assets/btnSiguiente.png"
 
     # Verificar si existen asintos vacios entre los primeros asientos
-    vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.85))
+    vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.90))
     total_aientos_vacios = restart = len(vacios)
     if total_aientos_vacios == 0:
         # Verificar si existen asintos vacios entre los asientos del medio-final, se hace un slide para bajar
@@ -75,9 +75,10 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
     # Para que itere entre los asientos marcando varios
     else:
         while cantidad > 0:
-            cantidad -= 1
             position = center(vacios[cantidad])
             click(position)
+            cantidad -= 1
+            sleep(0.3)
             if checkLoading() is False:
                 sleep(0.3)
 
