@@ -38,22 +38,18 @@ def select_asiento_varios(concurency: bool, cantidad: int, varios: bool, strongN
     # Verificar si existen asintos vacios entre los primeros asientos
     vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.85))
     total_aientos_vacios = restart = len(vacios)
-    print(total_aientos_vacios, 'totallllll')
-    print(vacios, 'vaciosssssss')
     if total_aientos_vacios == 0:
         # Verificar si existen asintos vacios entre los asientos del medio-final, se hace un slide para bajar
         slideScreen()
         sleep(0.3)
         vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.85))
         total_aientos_vacios = restart = len(vacios)
-        print(total_aientos_vacios, 'totallllll2222222')
         if total_aientos_vacios == 0 and checkTrain:
             # Verificar si existen asintos vacios entre los asientos del final si es un tren, se hace un slide para bajar
             slideScreen()
             sleep(0.3)
             vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.85))
             total_aientos_vacios = restart = len(vacios)
-            print(total_aientos_vacios, 'totallllll33333')
 
     if total_aientos_vacios == 0:
         # Si el total_aientos_vacios es 0 es pq no hay vacios

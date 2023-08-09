@@ -76,7 +76,7 @@ def start(stop):
     resizeWindow(window)
 
     #contar los fallos del boton buscar, para ver si falla 5 vece y detener el ciclo
-    fallos_permitidos = 5;
+    fallos_permitidos = 5
 
     alternar = aleatory.get()
     while True:
