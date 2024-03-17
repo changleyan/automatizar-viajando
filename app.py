@@ -1,90 +1,22 @@
 from selectAsiento import select_asiento_varios
 from pyautogui import sleep
-from utils import clickButton, checkLoading, checkStay, slideScreen, pag, region, click
-from datetime import datetime
-
-
-def click_to_omnibus(capture: bool, position):
-    if capture:
-        dt = datetime.now()
-        ts = datetime.timestamp(dt)
-        ruta = "C:/Users/CHANG/Pictures/Pasajes/{}.png".format(ts)
-        pag.screenshot(ruta, region=region)
-
-    sleep(0.1)
-    click(position)
-    sleep(0.2)
-    loading = checkLoading()
-    sleep(0.1)
-    if loading is False:
-        return True, False
-    return False, False
-
-def select_viaje(capture: bool, exactDay: bool, checkTrain:bool):
-    btnBuscar = "./assets/btnBuscar.png"        #boton de buscar
-    exactDayFail = "./assets/exactDayFail.png"  #es el mensaje que sale cuando no hay pasajes para ese dia
-    existCapacity = "./assets/btnOmnibus.png"   #es el mensaje que sale cuando no hay pasajes aunque no sea del dia
-    trainMenu = "./assets/btnTren.png"          #boton del menu de tren
-
-    if clickButton(btnBuscar):
-        loading = checkLoading()
-        if loading is False:
-            position = None
-            iscapacity, position = checkStay(existCapacity)
-            if exactDay:
-                # veo si no hay en omnibus
-                isNotExactDay, pos1 = checkStay(exactDayFail)
-                if isNotExactDay:
-                    # si checkTrain es true entonces verifico en el tren
-                    if checkTrain:
-                        # paso al menu del tren
-                        if clickButton(trainMenu):
-                            # verifico que exista
-                            iscapacity, position = checkStay(existCapacity)
-                            if iscapacity is False:
-                                return False, False
-                            else:
-                                isNotExactDay, pos1 = checkStay(exactDayFail)
-                                if isNotExactDay:
-                                    return False, False
-                    else:
-                        return False, False
-
-            if iscapacity is False:
-                # si checkTrain es true entonces verifico en el tren
-                if checkTrain:
-                    # paso al menu del tren
-                    if clickButton(trainMenu):
-                        iscapacity, position = checkStay(existCapacity)
-                        if iscapacity is False:
-                            return False, False
-                        else:
-                            return click_to_omnibus(capture, position)
-                else:
-                    return False, False
-            else:
-                return click_to_omnibus(capture, position)
-    return False, True
+from steep1SelectTrip import select_viaje
+from utils import findImageAndClick
 
 
 def main(repesca: bool, concurency: bool, varios:bool, cantidad: int, capture: bool, exactDay:bool, checkTrain:bool, strongNotification:bool):
     is_capacity, fallo = select_viaje(capture, exactDay, checkTrain)
-    #print(f'Is capacity: {is_capacity}, fallo: {fallo} ....!')
     if is_capacity:
-        # slideScreen()
-        return select_asiento_varios(concurency, cantidad, varios, strongNotification, checkTrain)
+        return select_asiento_varios(concurency, cantidad, varios, strongNotification)
     else:
-        if repesca:
-            btnAtras = "./assets/btnAtras.png"
-            clickButton(btnAtras)
-            sleep(0.2)
-            click((500, 115))
-            sleep(0.2)
+        btnAtras = "./assets/btnAtras.png"
+        findImageAndClick(btnAtras)
+        sleep(0.2)
 
-            if fallo:
-                return False, True
-            return False, False
-def app(repesca: bool = False, concurency: bool = False, varios: bool = False, cantidad:int = 2, capture: bool = False, exactDay: bool = False, checkTrain: bool = True, strongNotification:bool = True):
+        if fallo:
+            return False, True
+        return False, False
+def app(repesca: bool = True, concurency: bool = False, varios: bool = False, cantidad:int = 2, capture: bool = False, exactDay: bool = False, checkTrain: bool = True, strongNotification:bool = True):
     return main(repesca, concurency, varios, cantidad, capture, exactDay, checkTrain, strongNotification)
 
 if __name__ == '__main__':

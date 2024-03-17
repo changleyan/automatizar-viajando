@@ -15,7 +15,6 @@ from pathlib import Path
 # print('data:', data)
 
 # print("position")
-# position = get_position('./assets/days/27.png')
 # asientoVacio = "./assets/asientoVacio.png"
 # # btnSiguiente = "./assets/siguiente.png"
 # #
@@ -77,12 +76,10 @@ print(pag.mouseInfo())
 # pag.screenshot(ruta, region=region)
 # print(pag.Window(hWnd=263542))
 # print(pag.mouseInfo())
-# a = get_position('./assets/days/27.png')
 # print(a)
 
 
 # day = 30
 # day = "./assets/days/{}.png".format(day)
 # print(day)
-# l =clickButton(day, 0.99)
 # print(l)

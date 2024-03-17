@@ -57,7 +57,7 @@ t1.place(x=150, y=280)
 lbl2 = Label(window, text='Refrescar')
 lbl2.place(x=60, y=320)
 t2=Entry()
-t2.insert(END, '3')
+t2.insert(END, '5')
 t2.place(x=150, y=320)
 
 
@@ -72,8 +72,8 @@ def start(stop):
     stop_threads = False
 
     # redimensionando la ventana para que coincidan las imagenes
-    window = 'LDPlayer'
-    resizeWindow(window)
+    window = 'MEmu'
+    # resizeWindow(window)
 
     #contar los fallos del boton buscar, para ver si falla 5 vece y detener el ciclo
     fallos_permitidos = 5
@@ -88,6 +88,7 @@ def start(stop):
             break
         #ver si esta fallando al encontrar el buscar, esto kiere decir que o se cerro la app u ocurrio algun otro error
         if fallo:
+            print(fallo, fallos_permitidos, 'fallos de la fallo')
             if fallos_permitidos <= 0:
                 print("Stop")
                 label.config(text="Refrescar en: {} segundos".format(0), font=('Helvetica 13'))
