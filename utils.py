@@ -11,11 +11,13 @@ import numpy as np
 
 region = (0, 3, 429, 724)
 
+
 def click(position):
     win32api.SetCursorPos(position)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-    time.sleep(0.1) #This pauses the script for 0.1 seconds
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+    time.sleep(0.1)  # This pauses the script for 0.1 seconds
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+
 
 def find_image_position(image_path):
     # Load the image to search for
@@ -44,6 +46,7 @@ def find_image_position(image_path):
 
     return (x, y)
 
+
 def cehckImagenInScreen(imagen: str):
     # Load the image to search for
     imagen_a_buscar = cv2.imread(imagen)
@@ -65,6 +68,7 @@ def cehckImagenInScreen(imagen: str):
         print("Image not found!")
         return False
     return True
+
 
 def isLoadindOnScreen(imagen: str):
     # Preprocesamiento de la imagen
@@ -92,17 +96,6 @@ def isLoadindOnScreen(imagen: str):
         return True
     return False
 
-def waitForLoadingOver(imagen: str = "./assets/genericLoader.png"):
-    position = isLoadindOnScreen(imagen)
-    while position:
-        sleep(0.4)
-        position = isLoadindOnScreen(imagen)
-    sleep(0.3)
-    return False
-
-
-
-
 
 def checkImageneOnScreen(imagen: str):
     position = find_image_position(imagen)
@@ -111,22 +104,58 @@ def checkImageneOnScreen(imagen: str):
         return False, None
     return True, position
 
+
 def slideScreen():
+    pos_x = 190
+    pos_y_1 = 645
+    pos_y_2 = 210
+    screen_width, screen_height = pyautogui.size()
+    if screen_width == 2560:
+        pos_x = 410
+        pos_y_1 = 1069
+        pos_y_2 = 750
+    if screen_width == 1920:
+        pos_x = 500
+        pos_y_1 = 1220
+        pos_y_2 = 648
     print('Slide...')
     sleep(0.2)
-    pag.moveTo(190,645, duration=0.1)
-    pag.dragTo(190,210, button='left', duration=0.1)
+    pag.moveTo(pos_x, pos_y_1, duration=0.1)
+    pag.dragTo(pos_x, pos_y_2, button='left', duration=0.1)
     sleep(0.2)
 
+
 def resizeWindow(nameWindow):
+    width = 429
+    height = 724
+    screen_width, screen_height = pyautogui.size()
+    if screen_width == 2560:
+        width = 932
+        height = 1445
+    if screen_width == 1920:
+        width = 983
+        height = 1503
     win = pygetwindow.getWindowsWithTitle(nameWindow)[0]
-    win.moveTo(0, 3)
-    win.size = (429, 724)
+    win.moveTo(0, 40)
+    win.size = (width, height)
     return True
+
 
 def distancy_between_points(p1, p2):
     distancia = math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
     return round(distancia)
+
+def with_screen():
+    screen_width, screen_height = pyautogui.size()
+    return screen_width
+
+def waitForLoadingOver(imagen: str = f"./assets/{with_screen()}/genericLoader.png"):
+    position = isLoadindOnScreen(imagen)
+    while position:
+        sleep(0.4)
+        position = isLoadindOnScreen(imagen)
+    sleep(0.3)
+    return False
 
 def findImageAndClick(imagen: str):
     # find position of imagen
@@ -137,6 +166,7 @@ def findImageAndClick(imagen: str):
     pyautogui.click()
     sleep(0.2)
     return True
+
 
 def findAllImages(image_path: str, threshold=0.8, min_distance=5):
     # Cargar la imagen a buscar

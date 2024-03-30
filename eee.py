@@ -15,8 +15,8 @@ from pathlib import Path
 # print('data:', data)
 
 # print("position")
-# asientoVacio = "./assets/asientoVacio.png"
-# # btnSiguiente = "./assets/siguiente.png"
+# asientoVacio = f"./assets/{with_screen()}/asientoVacio.png"
+# # btnSiguiente = f"./assets/{with_screen()}/siguiente.png"
 # #
 # vacios = list(locateAllOnScreen(asientoVacio, region=region, confidence=0.9))
 #
@@ -55,9 +55,9 @@ import win32gui
 # win = pag.getWindowsWithTitle('Nox')
 # print(win)
 #resizeWindow('MEmu')
-resizeWindow('LDPlayer')
-# region = pag.getWindowsWithTitle('MEmu')[0]
-# print(region)
+# resizeWindow('LDPlayer')
+region = pag.getWindowsWithTitle('MEmu')[0]
+print(region)
 # region = (region.left, region.top, region.width, region.height)
 # print(region)
 # pag.moveTo(1610, 670, duration=0.1)
@@ -80,6 +80,6 @@ print(pag.mouseInfo())
 
 
 # day = 30
-# day = "./assets/days/{}.png".format(day)
+# day = f"./assets/{with_screen()}/days/{}.png".format(day)
 # print(day)
 # print(l)

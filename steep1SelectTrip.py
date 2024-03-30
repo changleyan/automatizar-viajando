@@ -1,4 +1,4 @@
-from utils import waitForLoadingOver, checkImageneOnScreen, pag, region, click, findImageAndClick
+from utils import waitForLoadingOver, checkImageneOnScreen, pag, region, click, findImageAndClick, with_screen
 from datetime import datetime
 from pyautogui import sleep
 
@@ -15,10 +15,10 @@ def click_to_omnibus(capture: bool, position):
     return True, False
 
 def select_viaje(capture: bool, exactDay: bool, checkTrain: bool):
-    btnBuscar = "./assets/btnBuscar.png"        # Botón de buscar
-    exactDayFail = "./assets/exactDayFail.png"  # Mensaje que sale cuando no hay pasajes para ese día
-    existCapacity = "./assets/btnOmnibus.png"   # Mensaje que sale cuando  hay pasajes aunque no sea del día
-    trainMenu = "./assets/btnTren.png"          # Botón del menú de tren
+    btnBuscar = f"./assets/{with_screen()}/btnBuscar.png"        # Botón de buscar
+    exactDayFail = f"./assets/{with_screen()}/exactDayFail.png"  # Mensaje que sale cuando no hay pasajes para ese día
+    existCapacity = f"./assets/{with_screen()}/btnOmnibus.png"   # Mensaje que sale cuando  hay pasajes aunque no sea del día
+    trainMenu = f"./assets/{with_screen()}/btnTren.png"          # Botón del menú de tren
 
     if findImageAndClick(btnBuscar):
         waitForLoadingOver()
