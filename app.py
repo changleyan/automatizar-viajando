@@ -4,8 +4,8 @@ from steep1SelectTrip import select_viaje
 from utils import findImageAndClick, with_screen
 
 
-def main(varios:bool, cantidad: int, capture: bool, exactDay:bool, checkTrain:bool, strongNotification:bool):
-    is_capacity, fallo = select_viaje(capture, exactDay, checkTrain)
+def main(varios:bool, cantidad: int, exactDay:bool, checkTrain:bool, strongNotification:bool):
+    is_capacity, fallo = select_viaje(exactDay, checkTrain)
     if is_capacity:
         return select_asiento_varios(cantidad, varios, strongNotification)
     else:
@@ -16,8 +16,8 @@ def main(varios:bool, cantidad: int, capture: bool, exactDay:bool, checkTrain:bo
         if fallo:
             return False, True
         return False, False
-def app(varios: bool = False, cantidad:int = 2, capture: bool = False, exactDay: bool = False, checkTrain: bool = True, strongNotification:bool = True):
-    return main(varios, cantidad, capture, exactDay, checkTrain, strongNotification)
+def app(varios: bool = False, cantidad:int = 2, exactDay: bool = False, checkTrain: bool = True, strongNotification:bool = True):
+    return main(varios, cantidad, exactDay, checkTrain, strongNotification)
 
 if __name__ == '__main__':
     # window = 'Nox'
@@ -26,7 +26,6 @@ if __name__ == '__main__':
     # aleatory es para que la repesca  no sea instantanea, sino que espere aleatoriamente para volver a hacer la peticion
     # cantidad son la cantidad de asientos que se kieren coger, funciona con la opcion varios en true
     # time es el tiempo maximo a esperar para refrescar va desde 1 hasta ese numero aleatoriamente
-    # capture para que capture los datos del omnibus que se seleciona
     # exactDay para que si no hay pasaejs para ese dia no coja el de otros
     # checkTrain verifica si hay pasajes en tren
-    main(varios=True, cantidad=4, capture=True, exactDay=False, checkTrain=True)
+    main(varios=True, cantidad=4, exactDay=False, checkTrain=True)

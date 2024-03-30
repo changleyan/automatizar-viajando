@@ -9,43 +9,39 @@ import cv2
 from pyautogui import sleep
 import numpy as np
 
-region = (0, 3, 429, 724)
-
-
 def click(position):
     win32api.SetCursorPos(position)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
     time.sleep(0.1)  # This pauses the script for 0.1 seconds
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
 
-
 def find_image_position(image_path):
     # Load the image to search for
-    imagen_a_buscar = cv2.imread(image_path)
+    imagen_a_buscar = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
     # Capture the screen using pyautogui
     pantalla = pyautogui.screenshot()
 
-    # Convert the screenshot to OpenCV format
+    # Convert the screenshot to OpenCV format and then to grayscale
     pantalla = cv2.cvtColor(np.array(pantalla), cv2.COLOR_RGB2BGR)
+    pantalla = cv2.cvtColor(pantalla, cv2.COLOR_BGR2GRAY)
 
     # Find the position of the image on the screen
-    resultado = cv2.matchTemplate(pantalla, imagen_a_buscar, cv2.TM_SQDIFF_NORMED)
+    resultado = cv2.matchTemplate(pantalla, imagen_a_buscar, cv2.TM_CCOEFF_NORMED)
 
-    # Get the minimum value from the result
-    min_val, _, min_loc, _ = cv2.minMaxLoc(resultado)
+    # Get the maximum value from the result
+    _, max_val, _, max_loc = cv2.minMaxLoc(resultado)
 
-    # If the minimum value is greater than a certain threshold, the image is not found
-    if min_val > 0.2:  # You may need to adjust this threshold based on your images and use case
-        print("Image not found!")
+    # If the maximum value is less than a certain threshold, the image is not found
+    if max_val < 0.8:  # You may need to adjust this threshold based on your images and use case
+        # print("Image not found!")
         return None
 
     # Get the coordinates of the top-left corner of the match
-    x = min_loc[0] + int(imagen_a_buscar.shape[1] / 2)
-    y = min_loc[1] + int(imagen_a_buscar.shape[0] / 2)
+    x = max_loc[0] + int(imagen_a_buscar.shape[1] / 2)
+    y = max_loc[1] + int(imagen_a_buscar.shape[0] / 2)
 
     return (x, y)
-
 
 def cehckImagenInScreen(imagen: str):
     # Load the image to search for
@@ -65,10 +61,9 @@ def cehckImagenInScreen(imagen: str):
 
     # If the minimum value is greater than a certain threshold, the image is not found
     if min_val > 0.2:  # You may need to adjust this threshold based on your images and use case
-        print("Image not found!")
+        # print("Image not found!")
         return False
     return True
-
 
 def isLoadindOnScreen(imagen: str):
     # Preprocesamiento de la imagen
@@ -96,7 +91,6 @@ def isLoadindOnScreen(imagen: str):
         return True
     return False
 
-
 def checkImageneOnScreen(imagen: str):
     position = find_image_position(imagen)
     sleep(0.2)
@@ -104,26 +98,24 @@ def checkImageneOnScreen(imagen: str):
         return False, None
     return True, position
 
-
 def slideScreen():
     pos_x = 190
     pos_y_1 = 645
-    pos_y_2 = 210
+    pos_y_2 = 200
     screen_width, screen_height = pyautogui.size()
     if screen_width == 2560:
         pos_x = 410
-        pos_y_1 = 1069
-        pos_y_2 = 750
+        pos_y_1 = 1420
+        pos_y_2 = 470
     if screen_width == 1920:
         pos_x = 500
-        pos_y_1 = 1220
+        pos_y_1 = 1320
         pos_y_2 = 648
     print('Slide...')
     sleep(0.2)
     pag.moveTo(pos_x, pos_y_1, duration=0.1)
     pag.dragTo(pos_x, pos_y_2, button='left', duration=0.1)
     sleep(0.2)
-
 
 def resizeWindow(nameWindow):
     width = 429
@@ -139,7 +131,6 @@ def resizeWindow(nameWindow):
     win.moveTo(0, 40)
     win.size = (width, height)
     return True
-
 
 def distancy_between_points(p1, p2):
     distancia = math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
@@ -166,7 +157,6 @@ def findImageAndClick(imagen: str):
     pyautogui.click()
     sleep(0.2)
     return True
-
 
 def findAllImages(image_path: str, threshold=0.8, min_distance=5):
     # Cargar la imagen a buscar

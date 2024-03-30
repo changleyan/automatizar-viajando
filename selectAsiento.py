@@ -5,16 +5,17 @@ import simpleaudio as sa
 def select_asiento_varios(cantidad: int, varios: bool, strongNotification: bool):
     asientoVacio = f"./assets/{with_screen()}/asientoVacio.png"
     btnSiguiente = f"./assets/{with_screen()}/btnSiguiente.png"
+
     def encontrar_asientos_vacios():
         vacios = list(findAllImages(asientoVacio))
-        if len(vacios) == 0:
+        if not vacios:
             slideScreen()
             sleep(0.2)
             vacios = list(findAllImages(asientoVacio))
         return vacios
 
     vacios = encontrar_asientos_vacios()
-    total = restart = len(vacios)
+    total = len(vacios)
 
     if total == 0:
         return False, False
@@ -29,9 +30,7 @@ def select_asiento_varios(cantidad: int, varios: bool, strongNotification: bool)
                 sleep(0.2)
             next, nextPosition = checkImageneOnScreen(btnSiguiente)
             if next:
-                total = restart
                 break
-
     else:
         vacios.reverse()
         for _ in range(cantidad):
@@ -48,13 +47,12 @@ def select_asiento_varios(cantidad: int, varios: bool, strongNotification: bool)
             print('Ta cogio................')
             notification_route = "{}\\assets\\notificacion-{}.wav".format(Path().absolute(), "lite").replace(r"/","\"")
             if strongNotification:
-                cantNotificacion = 5
-                while(cantNotificacion > 0):
+                for _ in range(5):
                     notification_sound = sa.WaveObject.from_wave_file(notification_route)
                     notification_sound.play().wait_done()
-                    cantNotificacion -= 1
-            notification_sound = sa.WaveObject.from_wave_file(notification_route)
-            notification_sound.play().wait_done()
+            else:
+                notification_sound = sa.WaveObject.from_wave_file(notification_route)
+                notification_sound.play().wait_done()
             return True, False
 
     return False, False
