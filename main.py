@@ -19,8 +19,8 @@ class Application(tk.Tk):
         self.strongNotification = tk.IntVar(value=0)
 
         self.create_checkbutton("Dia exacto", self.exactDay, 60, 30)
-        self.create_checkbutton("Varios pasajes", self.varios, 60, 60)
-        self.create_checkbutton("Verificar en tren", self.checkTrain, 60, 90)
+        self.create_checkbutton("Varios pasajes", self.varios, 60, 90)
+        self.create_checkbutton("Verificar en tren", self.checkTrain, 60, 60)
         self.create_checkbutton("Repetir Notificación [5]", self.strongNotification, 60, 120)
 
         self.t1 = self.create_label_entry('Asientos [cantidad]', '2', 60, 170)

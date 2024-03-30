@@ -27,10 +27,15 @@ def select_viaje(exactDay: bool, checkTrain: bool):
 
         if exactDay:
             is_not_exact_day, _ = checkImageneOnScreen(exactDayFail)
+            if is_not_exact_day and not checkTrain:
+                return False, False
             if is_not_exact_day and checkTrain:
                 if findImageAndClick(trainMenu):
                     is_not_exact_day, _ = checkImageneOnScreen(exactDayFail)
                     if is_not_exact_day:
+                        return False, False
+                    is_capacity, position = checkImageneOnScreen(existCapacity)
+                    if not is_capacity:
                         return False, False
 
         if is_capacity:

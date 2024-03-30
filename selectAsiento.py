@@ -21,7 +21,7 @@ def select_asiento_varios(cantidad: int, varios: bool, strongNotification: bool)
         return False, False
 
     cantidad = min(cantidad, total)
-    if not varios:
+    if varios == 0:
         while total > 0:
             total -= 1
             position = vacios[total]

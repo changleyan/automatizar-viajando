@@ -100,7 +100,7 @@ def checkImageneOnScreen(imagen: str):
 
 def slideScreen():
     pos_x = 190
-    pos_y_1 = 645
+    pos_y_1 = 700
     pos_y_2 = 200
     screen_width, screen_height = pyautogui.size()
     if screen_width == 2560:
@@ -118,17 +118,23 @@ def slideScreen():
     sleep(0.2)
 
 def resizeWindow(nameWindow):
-    width = 429
-    height = 724
+    width = 430
+    height = 726
+    left = -1
+    top = 0
     screen_width, screen_height = pyautogui.size()
     if screen_width == 2560:
         width = 932
         height = 1445
+        left = 0
+        top = 40
     if screen_width == 1920:
         width = 983
         height = 1503
+        left = 0
+        top = 40
     win = pygetwindow.getWindowsWithTitle(nameWindow)[0]
-    win.moveTo(0, 40)
+    win.moveTo(left, top)
     win.size = (width, height)
     return True
 
